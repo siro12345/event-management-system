@@ -2,206 +2,278 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Student Marks Calculator</title>
+    <title>Student Grade System</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #eef4ff;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            width: 480px;
+            max-width: 95%;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px #ccd8ee;
+        }
+
+        h2 {
+            text-align: center;
+            color: #2563eb;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            font-weight: bold;
+        }
+
+        input[type=text] {
+            width: 95%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+        }
+
+        .option {
+            display: inline-block;
+            margin: 10px 8px 0 0;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 15px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px 5px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #edf2ff;
+            font-size: 12px;
+        }
+
+        input[type=number] {
+            width: 75px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        button {
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            width: 48%;
+        }
+
+        .calculate {
+            background: #2563eb;
+        }
+
+        .show {
+            background: #089bd5;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+        }
+
+        #message {
+            color: red;
+            font-size: 13px;
+        }
+    </style>
 </head>
 
 <body>
 
-<center>
+<div class="container">
 
-<h2>Student Marks & Grade Calculator</h2>
+<h2>STUDENT GRADE SYSTEM</h2>
 
-<table border="1" cellpadding="12" width="450">
-
-<tr>
-<td>
-
-<form onsubmit="return submitData()">
+<form>
 
 <label>Name</label>
-
-<input type="text" id="name" required>
-
-<br><br><br>
+<input type="text" id="name" placeholder="Enter student name">
 
 <label>Gender</label>
 
-<input type="radio" name="gender" value="Male" checked> M
+<div class="option">
+<input type="radio" name="gender" value="Male"> Male
+</div>
 
-<input type="radio" name="gender" value="Female"> F
-
-<br><br><br>
+<div class="option">
+<input type="radio" name="gender" value="Female"> Female
+</div>
 
 <label>Course</label>
 
-<br><br>
-
+<div class="option">
 <input type="checkbox" name="course" value="HNDIT"> HNDIT
+</div>
 
-<br><br>
+<div class="option">
+<input type="checkbox" name="course" value="HNDSE"> HNDSE
+</div>
 
-<input type="checkbox" name="course" value="HNDA"> HNDA
+<div class="option">
+<input type="checkbox" name="course" value="HNDJA"> HNDJA
+</div>
 
-<br><br>
+<label>Subject Marks</label>
 
-<input type="checkbox" name="course" value="HNDE"> HNDE
-
-<br><br><br>
-
-<table border="1" cellpadding="8" width="100%">
-
+<table>
 <tr>
-    <th>Subject</th>
-    <th>Marks</th>
-    <th>Grade</th>
+<th>SUBJECT</th>
+<th>MARKS</th>
+<th>GRADE</th>
 </tr>
 
 <tr>
-    <td>ML</td>
-    <td><input type="number" id="ml" min="0" max="100"></td>
-    <td><input type="text" id="mlg" size="3" readonly></td>
+<td>Machine Learning</td>
+<td><input type="number" id="m1" min="0" max="100"></td>
+<td id="g1">-</td>
 </tr>
 
 <tr>
-    <td>CN</td>
-    <td><input type="number" id="cn" min="0" max="100"></td>
-    <td><input type="text" id="cng" size="3" readonly></td>
+<td>Computer Network</td>
+<td><input type="number" id="m2" min="0" max="100"></td>
+<td id="g2">-</td>
 </tr>
 
 <tr>
-    <td>EA</td>
-    <td><input type="number" id="ea" min="0" max="100"></td>
-    <td><input type="text" id="eag" size="3" readonly></td>
+<td>Architecture</td>
+<td><input type="number" id="m3" min="0" max="100"></td>
+<td id="g3">-</td>
 </tr>
 
+<tr>
+<td><b>Average</b></td>
+<td colspan="2" id="avg">-</td>
+</tr>
 </table>
 
-<br><br>
+<p id="message"></p>
 
-<label>Average</label>
+<div class="buttons">
 
-<input type="text" id="average" readonly size="12">
+<button type="button" class="calculate"
+onclick="calculate()">Calculate</button>
 
-<br><br>
+<button type="button" class="show"
+onclick="showResult()">Show</button>
 
-<center>
-
-<input type="submit" value="Submit">
-
-&nbsp;&nbsp;&nbsp;&nbsp;
-
-<input type="button" value="Click" onclick="calculate()">
-
-</center>
-
-<br>
-
-<p id="result"></p>
+</div>
 
 </form>
-
-</td>
-</tr>
-
-</table>
-
-</center>
+</div>
 
 <script>
 
-function getGrade(mark) {
-
-    if(mark >= 80) {
-        return "A";
-    }
-
-    else if(mark >= 60) {
-        return "B";
-    }
-
-    else if(mark >= 40) {
-        return "C";
-    }
-
-    else {
-        return "D";
-    }
-
+function grade(mark) {
+    if(mark >= 75) return "A";
+    if(mark >= 65) return "B";
+    if(mark >= 50) return "C";
+    if(mark >= 40) return "S";
+    return "F";
 }
 
+function getData() {
+
+    let name = document.getElementById("name").value.trim();
+
+    let gender = document.querySelector(
+        'input[name="gender"]:checked'
+    );
+
+    let courses = [];
+
+    document.querySelectorAll(
+        'input[name="course"]:checked'
+    ).forEach(c => courses.push(c.value));
+
+    let marks = [
+        document.getElementById("m1").value,
+        document.getElementById("m2").value,
+        document.getElementById("m3").value
+    ];
+
+    if(name === "") throw "Enter student name";
+    if(!gender) throw "Select gender";
+    if(courses.length === 0) throw "Select course";
+
+    if(marks.some(m => m === "" || Number(m) < 0 || Number(m) > 100))
+        throw "Enter marks between 0 and 100";
+
+    marks = marks.map(Number);
+
+    let average = (marks[0] + marks[1] + marks[2]) / 3;
+
+    return {
+        name: name,
+        gender: gender.value,
+        courses: courses,
+        marks: marks,
+        grades: marks.map(grade),
+        average: average.toFixed(2),
+        overallGrade: grade(average)
+    };
+}
 
 function calculate() {
 
-    let ml = document.getElementById("ml").value;
-    let cn = document.getElementById("cn").value;
-    let ea = document.getElementById("ea").value;
+    try {
+        let data = getData();
 
-    if(ml === "" || cn === "" || ea === "") {
-        alert("Please enter all marks!");
-        return;
+        document.getElementById("g1").innerHTML = data.grades[0];
+        document.getElementById("g2").innerHTML = data.grades[1];
+        document.getElementById("g3").innerHTML = data.grades[2];
+
+        document.getElementById("avg").innerHTML =
+            data.average + "% (" + data.overallGrade + ")";
+
+        document.getElementById("message").innerHTML = "";
+
+        localStorage.setItem("student", JSON.stringify(data));
+
+    } catch(error) {
+        document.getElementById("message").innerHTML = error;
     }
-
-    ml = Number(ml);
-    cn = Number(cn);
-    ea = Number(ea);
-
-    if(ml < 0 || ml > 100 ||
-       cn < 0 || cn > 100 ||
-       ea < 0 || ea > 100) {
-
-        alert("Enter marks between 0 and 100!");
-        return;
-    }
-
-    document.getElementById("mlg").value = getGrade(ml);
-
-    document.getElementById("cng").value = getGrade(cn);
-
-    document.getElementById("eag").value = getGrade(ea);
-
-    let total = ml + cn + ea;
-
-    let avg = total / 3;
-
-    document.getElementById("average").value =
-        avg.toFixed(2);
-
-    document.getElementById("result").innerHTML =
-        "Marks Calculated Successfully!";
-
 }
 
+function showResult() {
 
-function submitData() {
+    try {
+        let data = getData();
 
-    let name = document.getElementById("name").value;
+        localStorage.setItem("student", JSON.stringify(data));
 
-    let courses = document.querySelectorAll(
-        'input[name="course"]:checked'
-    );
+        window.location.href = "result.html";
 
-    if(courses.length == 0) {
-        alert("Please select a course!");
-        return false;
+    } catch(error) {
+        document.getElementById("message").innerHTML = error;
     }
-
-    let selected = [];
-
-    courses.forEach(function(course) {
-        selected.push(course.value);
-    });
-
-    alert(
-        "Name: " + name +
-        "\nCourses: " + selected.join(", ")
-    );
-
-    return false;
-
 }
 
 </script>
 
 </body>
 </html>
+
+
+
 

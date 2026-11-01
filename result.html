@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Result</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #eef4ff;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px #ccd8ee;
+        }
+
+        h2 {
+            text-align: center;
+            color: #2563eb;
+        }
+
+        p {
+            background: #f1f5ff;
+            padding: 12px;
+            border-radius: 7px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        td, th {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #eaf0ff;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 7px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>STUDENT RESULT</h2>
+
+<div id="result"></div>
+
+<button onclick="window.print()">Print</button>
+
+<button onclick="location.href='index.html'">Back</button>
+
+</div>
+
+<script>
+
+let data = JSON.parse(localStorage.getItem("student"));
+
+let result = document.getElementById("result");
+
+function safe(value) {
+    return String(value).replace(/[&<>"']/g, c => ({
+        "&":"&amp;", "<":"&lt;", ">":"&gt;",
+        '"':"&quot;", "'":"&#039;"
+    })[c]);
+}
+
+if(data) {
+
+result.innerHTML = `
+
+<p><b>Name:</b> ${safe(data.name)}</p>
+
+<p><b>Gender:</b> ${safe(data.gender)}</p>
+
+<p><b>Course:</b> ${data.courses.map(safe).join(", ")}</p>
+
+<h3>Subject Details</h3>
+
+<table>
+
+<tr>
+<th>Subject</th>
+<th>Marks</th>
+<th>Grade</th>
+</tr>
+
+<tr>
+<td>Machine Learning</td>
+<td>${data.marks[0]}</td>
+<td>${data.grades[0]}</td>
+</tr>
+
+<tr>
+<td>Computer Network</td>
+<td>${data.marks[1]}</td>
+<td>${data.grades[1]}</td>
+</tr>
+
+<tr>
+<td>Architecture</td>
+<td>${data.marks[2]}</td>
+<td>${data.grades[2]}</td>
+</tr>
+
+</table>
+
+<p><b>Average:</b> ${data.average}%</p>
+
+<p><b>Overall Grade:</b> ${data.overallGrade}</p>
+
+`;
+
+} else {
+    result.innerHTML = "No student data found. Please enter details first.";
+}
+
+</script>
+
+</body>
+</html>
